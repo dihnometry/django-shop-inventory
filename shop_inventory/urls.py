@@ -19,7 +19,7 @@ from django.contrib import admin
 from django.urls import path, include
 
 urlpatterns = [
-    path("shop/", include("inventory_manager.urls")),
+    path("api/", include("inventory_manager.urls")),
     path("admin/", admin.site.urls),
     path("api-auth/", include("rest_framework.urls")),
 ]
