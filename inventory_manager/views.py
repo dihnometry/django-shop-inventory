@@ -1,12 +1,27 @@
 from rest_framework import generics
+from rest_framework import permissions
+from django.contrib.auth.models import User
 
 from .models import Category, ProductProvider, Stock, Transaction
 from .serializers import (
+    UserSerializer,
     CategorySerializer,
     ProductProviderSerializer,
     StockSerializer,
     TransactionSerializer,
 )
+
+
+class UserList(generics.ListCreateAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = Category.objects.all()
+    serializer_class = UserSerializer
+
+
+class UserDetail(generics.RetrieveAPIView):
+    permission_classes = [permissions.AllowAny]
+    queryset = Category.objects.all()
+    serializer_class = UserSerializer
 
 
 class CategoryList(generics.ListCreateAPIView):
