@@ -13,59 +13,52 @@ This project is a Django-based inventory management system designed for small st
 
 ### Prerequisites
 
-- Python 3.x
-- Django
-- Django REST Framework
-- MySQL
+- [Docker](https://docs.docker.com/get-docker/) and Docker Compose
+- Git
 
-### Installation
+### How to Run
 
 1. Clone the repository:
-   ```bash
+```bash
    git clone https://github.com/dihnometry/django-shop-inventory.git
    cd django-shop-inventory
-   ```
+```
 
-2. Create a virtual environment and activate it:
-   ```bash
-   python3 -m venv env
-   source env/bin/activate  # On Windows use `env\Scripts\activate`
-   ```
+2. Create your environment file from the example and edit the values:
+```bash
+   cp .env.example .env
+```
+   The `.env` file defines the following variables:
+```
+   DB_NAME=inventorydb
+   DB_USER=inventory_user
+   DB_PASSWORD=SecretPass_1234
+   DB_ROOT_PASSWORD=changeme
+   SECRET_KEY='supersecretkey'
+```
+   `DB_USER` must **not** be `root`.
 
-3. Install the required dependencies:
-   ```bash
-   pip install -r requirements.txt
-   ```
+3. Build and start the containers (MySQL + Django):
+```bash
+   docker compose up --build
+```
+   The API will be available at `http://localhost:8000`.
 
-4. Set up the MySQL database and configure the database settings in `settings.py`:
-   ```python
-   DATABASES = {
-       'default': {
-           'ENGINE': 'django.db.backends.mysql',
-           'NAME': 'your_db_name',
-           'USER': 'your_db_user',
-           'PASSWORD': 'your_db_password',
-           'HOST': 'localhost',
-           'PORT': 'your_port',
-       }
-   }
-   ```
+4. In another terminal, apply the migrations (they are not run automatically):
+```bash
+   docker compose exec django-web python manage.py migrate
+```
 
-5. Apply migrations:
-   ```bash
-   python manage.py migrate
-   ```
+5. Create a superuser (optional):
+```bash
+   docker compose exec django-web python manage.py createsuperuser
+```
 
-6. Create a superuser:
-   ```bash
-   python manage.py createsuperuser
-   ```
-
-7. Run the server:
-   ```bash
-   python manage.py runserver
-   ```
-
+6. Stop the containers:
+```bash
+   docker compose down        # keeps the database data
+   docker compose down -v     # also deletes the database volume
+```
 ### API Endpoints
 
 The following are the key endpoints provided by the API:
