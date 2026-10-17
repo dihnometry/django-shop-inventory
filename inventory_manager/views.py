@@ -1,14 +1,12 @@
-from rest_framework import generics
-from rest_framework import permissions
-from django.contrib.auth.models import User
+from rest_framework import generics, permissions
 
 from .models import Category, ProductProvider, Stock, Transaction
 from .serializers import (
-    UserSerializer,
     CategorySerializer,
     ProductProviderSerializer,
     StockSerializer,
     TransactionSerializer,
+    UserSerializer,
 )
 
 
